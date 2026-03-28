@@ -1,0 +1,94 @@
+from database.conexion import query_fetchall, query_fetchone, query_commit
+
+from database.conexion import query_fetchone
+from datetime import datetime
+
+
+def calcular_pago(celda_id, tarifa_hora=2000):
+    celda = query_fetchone(
+        """
+        SELECT fecha_asignacion
+        FROM celdas
+        WHERE id=?
+    """,
+        (celda_id,),
+    )
+
+    if not celda or not celda["fecha_asignacion"]:
+        return 0
+
+    fecha_entrada = celda["fecha_asignacion"]
+    fecha_salida = datetime.now()
+
+    tiempo = fecha_salida - fecha_entrada
+    horas = tiempo.total_seconds() / 3600
+
+    # mínimo 1 hora
+    horas = max(1, round(horas))
+
+    total = horas * tarifa_hora
+
+    return total
+
+
+def obtener_todos():
+    return query_fetchall(
+        """
+        SELECT p.id, u.nombre, u.cedula, u.placa,
+               p.monto, p.mes_pagado, p.estado,
+               CONVERT(VARCHAR,p.fecha_pago,103) AS fecha_pago,
+               p.observacion
+        FROM pagos p
+        JOIN usuarios u ON u.id = p.usuario_id
+        ORDER BY p.fecha_pago DESC
+    """
+    )
+
+
+def obtener_por_usuario(usuario_id):
+    return query_fetchall(
+        """
+        SELECT p.id, p.monto, p.mes_pagado, p.estado,
+               CONVERT(VARCHAR,p.fecha_pago,103) AS fecha_pago,
+               p.observacion
+        FROM pagos p WHERE p.usuario_id=?
+        ORDER BY p.fecha_pago DESC
+    """,
+        (usuario_id,),
+    )
+
+
+def registrar(usuario_id, monto, mes_pagado, observacion=None):
+    return query_commit(
+        """
+        INSERT INTO pagos (usuario_id, monto, mes_pagado, estado, observacion)
+        VALUES (?, ?, ?, 'pagado', ?)
+    """,
+        (usuario_id, monto, mes_pagado, observacion or None),
+    )
+
+
+def estado_por_usuario():
+    return query_fetchall(
+        """
+        SELECT u.id, u.nombre, u.cedula, u.placa,
+               ISNULL(
+                   (SELECT TOP 1 mes_pagado FROM pagos
+                    WHERE usuario_id=u.id AND estado='pagado'
+                    ORDER BY fecha_pago DESC),
+               'Sin pagos') AS ultimo_pago
+        FROM usuarios u
+        WHERE u.estado='activo'
+        ORDER BY u.nombre
+    """
+    )
+
+
+def resumen():
+    return query_fetchone(
+        """
+        SELECT COUNT(*) AS total_pagos,
+               ISNULL(SUM(monto),0) AS total_recaudado
+        FROM pagos WHERE estado='pagado'
+    """
+    )
