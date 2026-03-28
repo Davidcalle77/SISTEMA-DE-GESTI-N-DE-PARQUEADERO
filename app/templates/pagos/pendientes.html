@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Estado de Pagos — Parqueadero{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1 class="ptitle">Estado de Pagos por Usuario</h1></div>
+  <a href="{{ url_for('pagos.index') }}" class="btn bl">← Volver</a>
+</div>
+
+<div class="tbl-wrap">
+  <table class="tbl">
+    <thead>
+      <tr><th>Nombre</th><th>Cedula</th><th>Placa</th><th>Ultimo Pago</th><th>Accion</th></tr>
+    </thead>
+    <tbody>
+      {% for u in usuarios %}
+      <tr>
+        <td><strong>{{ u.nombre }}</strong></td>
+        <td>{{ u.cedula }}</td>
+        <td>{{ u.placa }}</td>
+        <td>
+          {% if u.ultimo_pago == 'Sin pagos' %}
+            <span class="badge br">Sin pagos</span>
+          {% else %}
+            <span class="badge bg">{{ u.ultimo_pago }}</span>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ url_for('pagos.index') }}" class="ba be">Registrar Pago</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="tc">No hay usuarios activos</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

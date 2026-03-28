@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>{% block title %}Parqueadero Autos Colombia{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}"/>
+</head>
+<body>
+<nav class="navbar">
+  <div class="brand">
+    <span class="brand-ico">P</span>
+    <span class="brand-txt">Autos Colombia</span>
+  </div>
+  <ul class="nav-menu">
+    <li><a href="{{ url_for('dashboard') }}"     class="nav-link {% if request.endpoint=='dashboard'       %}active{% endif %}">Panel</a></li>
+    <li><a href="{{ url_for('usuarios.index') }}" class="nav-link {% if 'usuarios' in (request.endpoint or '') %}active{% endif %}">Usuarios</a></li>
+    <li><a href="{{ url_for('celdas.index') }}"   class="nav-link {% if 'celdas'   in (request.endpoint or '') %}active{% endif %}">Celdas</a></li>
+    <li><a href="{{ url_for('entradas.index') }}" class="nav-link {% if 'entradas' in (request.endpoint or '') %}active{% endif %}">Entradas/Salidas</a></li>
+    <li><a href="{{ url_for('pagos.index') }}"    class="nav-link {% if 'pagos'    in (request.endpoint or '') %}active{% endif %}">Pagos</a></li>
+  </ul>
+</nav>
+
+<main class="main">
+  {% with msgs = get_flashed_messages(with_categories=true) %}
+    {% if msgs %}
+      <div class="flashes">
+        {% for cat,msg in msgs %}
+          <div class="alert alert-{{cat}}">{{msg}}<button onclick="this.parentElement.remove()">×</button></div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">Parqueadero Autos Colombia © 2025 — Ingeniería de Software</footer>
+<script src="{{ url_for('static',filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

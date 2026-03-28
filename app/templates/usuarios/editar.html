@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Editar Usuario — Parqueadero{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1 class="ptitle">Editar Usuario</h1></div>
+  <a href="{{ url_for('usuarios.index') }}" class="btn bl">← Volver</a>
+</div>
+
+<div class="fcard">
+  <form method="POST" action="{{ url_for('usuarios.editar', id=usuario.id) }}">
+
+    <div class="fstitle">Datos Personales</div>
+    <div class="fgrid">
+      <div class="fg">
+        <label class="flbl">Nombre completo *</label>
+        <input type="text" name="nombre" class="fi" value="{{ usuario.nombre }}" required/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Cedula (no editable)</label>
+        <input type="text" class="fi" value="{{ usuario.cedula }}" disabled/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Telefono *</label>
+        <input type="text" name="telefono" class="fi" value="{{ usuario.telefono }}" required/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Correo electronico</label>
+        <input type="email" name="correo" class="fi" value="{{ usuario.correo or '' }}"/>
+      </div>
+    </div>
+
+    <div class="fstitle">Vehiculo</div>
+    <div class="fgrid">
+      <div class="fg">
+        <label class="flbl">Tipo (no editable)</label>
+        <input type="text" class="fi" value="{{ usuario.tipo_vehiculo|capitalize }}" disabled/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Placa *</label>
+        <input type="text" name="placa" class="fi" value="{{ usuario.placa }}"
+               oninput="this.value=this.value.toUpperCase()" required maxlength="10"/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Celda asignada</label>
+        <input type="text" class="fi" value="{{ usuario.celda or 'Sin celda' }}" disabled/>
+      </div>
+    </div>
+
+    <div class="facts">
+      <button type="submit" class="btn bp">Guardar Cambios</button>
+      <a href="{{ url_for('usuarios.index') }}" class="btn bs">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

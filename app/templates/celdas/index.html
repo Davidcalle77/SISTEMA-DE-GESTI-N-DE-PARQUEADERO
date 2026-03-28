@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Celdas — Parqueadero{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1 class="ptitle">Mapa de Celdas</h1><p class="psub">Haz clic en una celda para ver opciones</p></div>
+  <button class="btn bs" onclick="location.reload()">Actualizar</button>
+</div>
+
+<div class="cards4">
+  <div class="card cb"><div class="cico">T</div><div><div class="cnum">{{ reporte.total if reporte else 0 }}</div><div class="clbl">Total</div></div></div>
+  <div class="card cg"><div class="cico">L</div><div><div class="cnum">{{ reporte.libres if reporte else 0 }}</div><div class="clbl">Libres</div></div></div>
+  <div class="card cr"><div class="cico">O</div><div><div class="cnum">{{ reporte.ocupadas if reporte else 0 }}</div><div class="clbl">Ocupadas</div></div></div>
+  <div class="card cy"><div class="cico">M</div><div><div class="cnum">{{ reporte.mantenimiento if reporte else 0 }}</div><div class="clbl">Mantenimiento</div></div></div>
+</div>
+
+<div class="leyenda">
+  <span class="li"><span class="dot dg"></span> Libre</span>
+  <span class="li"><span class="dot dr"></span> Ocupada</span>
+  <span class="li"><span class="dot dy"></span> Mantenimiento</span>
+</div>
+
+{% set sectores = celdas | groupby('sector') %}
+{% for sector, grupo in sectores %}
+<div class="sector">
+  <h3 class="sector-t">Sector {{ sector }}</h3>
+  <div class="cgrid">
+    {% for c in grupo %}
+    <div class="celda celda-{{ c.estado }}"
+         onclick="abrirModal({{ c.id }},'{{ c.codigo }}','{{ c.estado }}','{{ c.usuario_nombre or '' }}','{{ c.usuario_placa or '' }}','{{ c.usuario_cedula or '' }}')">
+      <span class="cc">{{ c.codigo }}</span>
+      <span class="ct">{{ c.tipo }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+
+<!-- Modal -->
+<div id="modal" class="modal hidden">
+  <div class="mbox">
+    <div class="mhead">
+      <h3 id="mtitulo"></h3>
+      <button onclick="cerrar()">×</button>
+    </div>
+    <div class="mbody" id="mbody"></div>
+    <div class="mfoot" id="mfoot"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function abrirModal(id, codigo, estado, usuario, placa, cedula) {
+  document.getElementById('mtitulo').textContent = 'Celda ' + codigo;
+
+  const cls = estado === 'libre' ? 'bg' : estado === 'ocupada' ? 'br' : 'by';
+  let b = `<p><strong>Estado:</strong> <span class="badge ${cls}">${estado}</span></p>`;
+  if (estado === 'ocupada') {
+    b += `<p><strong>Usuario:</strong> ${usuario}</p>`;
+    b += `<p><strong>Cedula:</strong> ${cedula}</p>`;
+    b += `<p><strong>Placa:</strong> ${placa}</p>`;
+  }
+  document.getElementById('mbody').innerHTML = b;
+
+  let f = '';
+  if (estado === 'ocupada') {
+    f = `<form method="POST" action="/celdas/liberar/${id}" onsubmit="return confirm('¿Liberar la celda ${codigo}?')">
+           <button class="btn br-btn">Liberar Celda</button>
+         </form>`;
+  } else if (estado === 'libre') {
+    f = `<form method="POST" action="/celdas/mantenimiento/${id}">
+           <div class="fg" style="margin-bottom:8px">
+             <label class="flbl">Motivo *</label>
+             <input type="text" name="motivo" class="fi" placeholder="Ej: Pintura del piso" required/>
+           </div>
+           <div class="fg" style="margin-bottom:12px">
+             <label class="flbl">Fecha fin estimada</label>
+             <input type="date" name="fecha_fin" class="fi"/>
+           </div>
+           <button class="btn cy-btn">Poner en Mantenimiento</button>
+         </form>`;
+  } else {
+    f = `<form method="POST" action="/celdas/liberar/${id}" onsubmit="return confirm('¿Marcar como libre?')">
+           <button class="btn bp">Marcar como Libre</button>
+         </form>`;
+  }
+  document.getElementById('mfoot').innerHTML = f;
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function cerrar() { document.getElementById('modal').classList.add('hidden'); }
+document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') cerrar(); });
+</script>
+{% endblock %}

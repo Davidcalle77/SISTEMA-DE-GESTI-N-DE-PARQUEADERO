@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Pagos — Parqueadero{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1 class="ptitle">Gestion de Pagos</h1></div>
+  <a href="{{ url_for('pagos.pendientes') }}" class="btn bs">Ver Estado por Usuario</a>
+</div>
+
+{% if resumen %}
+<div class="cards4" style="grid-template-columns:repeat(2,1fr);max-width:500px">
+  <div class="card cb">
+    <div class="cico">P</div>
+    <div><div class="cnum">{{ resumen.total_pagos }}</div><div class="clbl">Total Pagos</div></div>
+  </div>
+  <div class="card cg">
+    <div class="cico">$</div>
+    <div><div class="cnum">${{ "{:,.0f}".format(resumen.total_recaudado) }}</div><div class="clbl">Total Recaudado</div></div>
+  </div>
+</div>
+{% endif %}
+
+<div class="fcard">
+  <div class="fstitle">Registrar Pago Mensual</div>
+  <form method="POST" action="{{ url_for('pagos.registrar') }}">
+    <div class="fgrid">
+      <div class="fg">
+        <label class="flbl">Usuario *</label>
+        <select name="usuario_id" class="fi" required>
+          <option value="">Seleccionar usuario...</option>
+          {% for u in usuarios %}
+          <option value="{{ u.id }}">{{ u.nombre }} — {{ u.placa }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="fg">
+        <label class="flbl">Mes pagado *</label>
+        <input type="text" name="mes_pagado" class="fi" placeholder="Ej: Enero 2025" required/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Monto (COP) *</label>
+        <input type="number" name="monto" class="fi" placeholder="Ej: 150000" min="1" step="1000" required/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Observacion</label>
+        <input type="text" name="observacion" class="fi" placeholder="Opcional..."/>
+      </div>
+    </div>
+    <div class="facts">
+      <button type="submit" class="btn bp">Registrar Pago</button>
+    </div>
+  </form>
+</div>
+
+<div class="stitle">Historial de Pagos</div>
+<div class="tbl-wrap">
+  <table class="tbl">
+    <thead>
+      <tr><th>Usuario</th><th>Cedula</th><th>Placa</th><th>Mes Pagado</th><th>Monto</th><th>Estado</th><th>Fecha</th></tr>
+    </thead>
+    <tbody>
+      {% for p in pagos %}
+      <tr>
+        <td><strong>{{ p.nombre }}</strong></td>
+        <td>{{ p.cedula }}</td>
+        <td>{{ p.placa }}</td>
+        <td>{{ p.mes_pagado }}</td>
+        <td style="text-align:right"><strong>${{ "{:,.0f}".format(p.monto) }}</strong></td>
+        <td><span class="badge {{ 'bg' if p.estado=='pagado' else 'br' }}">{{ p.estado }}</span></td>
+        <td>{{ p.fecha_pago }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" class="tc">No hay pagos registrados</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

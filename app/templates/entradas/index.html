@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Entradas y Salidas — Parqueadero{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1 class="ptitle">Entradas y Salidas</h1></div>
+  <div style="display:flex;gap:8px">
+    <a href="{{ url_for('entradas.registrar') }}" class="btn bp">+ Registrar</a>
+    <a href="{{ url_for('entradas.buscar') }}"    class="btn bs">Buscar por Placa</a>
+  </div>
+</div>
+
+<div class="tbl-wrap">
+  <table class="tbl">
+    <thead>
+      <tr><th>Placa</th><th>Tipo</th><th>Movimiento</th><th>Celda</th><th>Usuario</th><th>Fecha y Hora</th><th>Observacion</th></tr>
+    </thead>
+    <tbody>
+      {% for e in historial %}
+      <tr>
+        <td><strong>{{ e.placa }}</strong></td>
+        <td>{{ e.tipo_vehiculo|capitalize }}</td>
+        <td><span class="badge {{ 'bg' if e.tipo_registro=='entrada' else 'br' }}">{{ e.tipo_registro }}</span></td>
+        <td>{{ e.celda or '-' }}</td>
+        <td>{{ e.usuario or 'Visitante' }}</td>
+        <td>{{ e.fecha_hora }}</td>
+        <td>{{ e.observacion or '-' }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" class="tc">No hay registros aun</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

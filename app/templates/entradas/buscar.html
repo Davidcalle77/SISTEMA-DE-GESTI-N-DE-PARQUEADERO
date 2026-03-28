@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Buscar por Placa — Parqueadero{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1 class="ptitle">Buscar por Placa</h1></div>
+  <a href="{{ url_for('entradas.index') }}" class="btn bl">← Volver</a>
+</div>
+
+<form method="GET" action="{{ url_for('entradas.buscar') }}" class="sform">
+  <input type="text" name="placa" value="{{ placa }}" placeholder="Ingresa la placa..." class="sinput"
+         oninput="this.value=this.value.toUpperCase()"/>
+  <button type="submit" class="btn bp">Buscar</button>
+</form>
+
+{% if placa %}
+<div class="tbl-wrap">
+  <table class="tbl">
+    <thead>
+      <tr><th>Placa</th><th>Tipo</th><th>Movimiento</th><th>Celda</th><th>Fecha y Hora</th><th>Observacion</th></tr>
+    </thead>
+    <tbody>
+      {% for e in resultados %}
+      <tr>
+        <td><strong>{{ e.placa }}</strong></td>
+        <td>{{ e.tipo_vehiculo|capitalize }}</td>
+        <td><span class="badge {{ 'bg' if e.tipo_registro=='entrada' else 'br' }}">{{ e.tipo_registro }}</span></td>
+        <td>{{ e.celda or '-' }}</td>
+        <td>{{ e.fecha_hora }}</td>
+        <td>{{ e.observacion or '-' }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="tc">No se encontraron registros para "{{ placa }}"</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

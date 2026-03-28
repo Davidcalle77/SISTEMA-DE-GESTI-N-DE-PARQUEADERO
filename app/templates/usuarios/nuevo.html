@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Usuario — Parqueadero{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1 class="ptitle">Registrar Nuevo Usuario</h1></div>
+  <a href="{{ url_for('usuarios.index') }}" class="btn bl">← Volver</a>
+</div>
+
+<div class="fcard">
+  <form method="POST" action="{{ url_for('usuarios.nuevo') }}" id="fmusuario">
+
+    <div class="fstitle">Datos Personales</div>
+    <div class="fgrid">
+      <div class="fg">
+        <label class="flbl">Nombre completo *</label>
+        <input type="text" name="nombre" class="fi" placeholder="Ej: Carlos Andres Ruiz" required/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Numero de cedula *</label>
+        <input type="text" name="cedula" class="fi" placeholder="Ej: 1012345678" required/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Telefono *</label>
+        <input type="text" name="telefono" class="fi" placeholder="Ej: 3001234567" required/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Correo electronico</label>
+        <input type="email" name="correo" class="fi" placeholder="correo@email.com"/>
+      </div>
+    </div>
+
+    <div class="fstitle">Informacion del Vehiculo</div>
+    <div class="fgrid">
+      <div class="fg">
+        <label class="flbl">Tipo de vehiculo *</label>
+        <select name="tipo_vehiculo" id="tipo_vehiculo" class="fi" required onchange="cargarCeldas(this.value)">
+          <option value="">Seleccionar...</option>
+          <option value="auto">Automovil</option>
+          <option value="moto">Motocicleta</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="flbl">Placa *</label>
+        <input type="text" name="placa" class="fi" placeholder="Ej: ABC-123"
+               oninput="this.value=this.value.toUpperCase()" required maxlength="10"/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Celda a asignar</label>
+        <select name="celda_id" id="celda_id" class="fi">
+          <option value="">Asignar automaticamente</option>
+        </select>
+        <small style="color:#64748b;font-size:11px">Si no seleccionas, se asigna la primera disponible.</small>
+      </div>
+    </div>
+
+    <div class="facts">
+      <button type="submit" class="btn bp">Registrar Usuario</button>
+      <a href="{{ url_for('usuarios.index') }}" class="btn bs">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function cargarCeldas(tipo) {
+  const sel = document.getElementById('celda_id');
+  sel.innerHTML = '<option value="">Cargando...</option>';
+  if (!tipo) { sel.innerHTML = '<option value="">Asignar automaticamente</option>'; return; }
+  fetch('/usuarios/api/celdas/' + tipo)
+    .then(r => r.json())
+    .then(data => {
+      sel.innerHTML = '<option value="">Asignar automaticamente</option>';
+      if (data.length === 0) {
+        sel.innerHTML = '<option value="">Sin celdas disponibles</option>';
+        return;
+      }
+      data.forEach(c => {
+        const o = document.createElement('option');
+        o.value = c.id;
+        o.textContent = c.codigo + ' — Sector ' + c.sector;
+        sel.appendChild(o);
+      });
+    })
+    .catch(() => { sel.innerHTML = '<option value="">Error al cargar</option>'; });
+}
+</script>
+{% endblock %}

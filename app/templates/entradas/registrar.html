@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Registrar Movimiento — Parqueadero{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1 class="ptitle">Registrar Entrada / Salida</h1></div>
+  <a href="{{ url_for('entradas.index') }}" class="btn bl">← Volver</a>
+</div>
+
+<div class="fcard">
+  <form method="POST" action="{{ url_for('entradas.registrar') }}">
+    <div class="fgrid">
+      <div class="fg">
+        <label class="flbl">Placa del vehiculo *</label>
+        <input type="text" name="placa" class="fi" placeholder="Ej: ABC-123"
+               oninput="this.value=this.value.toUpperCase()" required maxlength="10"/>
+      </div>
+      <div class="fg">
+        <label class="flbl">Tipo de vehiculo *</label>
+        <select name="tipo_vehiculo" class="fi" required>
+          <option value="">Seleccionar...</option>
+          <option value="auto">Automovil</option>
+          <option value="moto">Motocicleta</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="flbl">Tipo de movimiento *</label>
+        <div class="rgroup">
+          <label class="rlbl">
+            <input type="radio" name="tipo_registro" value="entrada" checked/>
+            <span class="rbtn rbg">ENTRADA</span>
+          </label>
+          <label class="rlbl">
+            <input type="radio" name="tipo_registro" value="salida"/>
+            <span class="rbtn rbr">SALIDA</span>
+          </label>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="flbl">Observacion</label>
+        <input type="text" name="observacion" class="fi" placeholder="Opcional..."/>
+      </div>
+    </div>
+    <div class="facts">
+      <button type="submit" class="btn bp">Registrar</button>
+      <a href="{{ url_for('entradas.index') }}" class="btn bs">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

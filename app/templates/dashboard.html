@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Panel — Parqueadero Autos Colombia{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1 class="ptitle">Panel Principal</h1><p class="psub">Sistema de Gestion — Parqueadero Autos Colombia</p></div>
+</div>
+
+<div class="cards4">
+  <div class="card cb">
+    <div class="cico">U</div>
+    <div><div class="cnum">{{ total_usuarios }}</div><div class="clbl">Usuarios Activos</div></div>
+  </div>
+  <div class="card cg">
+    <div class="cico">L</div>
+    <div><div class="cnum">{{ reporte.libres if reporte else 0 }}</div><div class="clbl">Celdas Libres</div></div>
+  </div>
+  <div class="card cr">
+    <div class="cico">O</div>
+    <div><div class="cnum">{{ reporte.ocupadas if reporte else 0 }}</div><div class="clbl">Celdas Ocupadas</div></div>
+  </div>
+  <div class="card cy">
+    <div class="cico">M</div>
+    <div><div class="cnum">{{ reporte.mantenimiento if reporte else 0 }}</div><div class="clbl">Mantenimiento</div></div>
+  </div>
+</div>
+
+<div class="stitle">Accesos Rapidos</div>
+<div class="qact">
+  <a href="{{ url_for('usuarios.nuevo') }}"    class="btn bp">+ Registrar Usuario</a>
+  <a href="{{ url_for('entradas.registrar') }}" class="btn bs">+ Registrar Entrada/Salida</a>
+  <a href="{{ url_for('pagos.index') }}"        class="btn bs">+ Registrar Pago</a>
+  <a href="{{ url_for('celdas.index') }}"       class="btn bs">Ver Mapa Celdas</a>
+</div>
+
+<div class="stitle">Ultimos Movimientos</div>
+<div class="tbl-wrap">
+  <table class="tbl">
+    <thead><tr><th>Placa</th><th>Tipo</th><th>Movimiento</th><th>Celda</th><th>Usuario</th><th>Fecha y Hora</th></tr></thead>
+    <tbody>
+      {% for e in historial %}
+      <tr>
+        <td><strong>{{ e.placa }}</strong></td>
+        <td>{{ e.tipo_vehiculo|capitalize }}</td>
+        <td><span class="badge {{ 'bg' if e.tipo_registro=='entrada' else 'br' }}">{{ e.tipo_registro }}</span></td>
+        <td>{{ e.celda or '-' }}</td>
+        <td>{{ e.usuario or 'Visitante' }}</td>
+        <td>{{ e.fecha_hora }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="tc">No hay movimientos registrados</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

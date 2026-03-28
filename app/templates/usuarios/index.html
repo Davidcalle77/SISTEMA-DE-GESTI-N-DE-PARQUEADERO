@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Usuarios — Parqueadero{% endblock %}
+{% block content %}
+<div class="ph">
+  <div><h1 class="ptitle">Gestion de Usuarios</h1></div>
+  <a href="{{ url_for('usuarios.nuevo') }}" class="btn bp">+ Nuevo Usuario</a>
+</div>
+
+<form method="GET" action="{{ url_for('usuarios.index') }}" class="sform">
+  <input type="text" name="q" value="{{ busqueda }}" placeholder="Buscar por cedula, placa o nombre..." class="sinput"/>
+  <button type="submit" class="btn bs">Buscar</button>
+  {% if busqueda %}<a href="{{ url_for('usuarios.index') }}" class="btn bl">Limpiar</a>{% endif %}
+</form>
+
+<div class="tbl-wrap">
+  <table class="tbl">
+    <thead>
+      <tr><th>Cedula</th><th>Nombre</th><th>Telefono</th><th>Vehiculo</th><th>Placa</th><th>Celda</th><th>Estado</th><th>Acciones</th></tr>
+    </thead>
+    <tbody>
+      {% for u in usuarios %}
+      <tr>
+        <td>{{ u.cedula }}</td>
+        <td><strong>{{ u.nombre }}</strong></td>
+        <td>{{ u.telefono }}</td>
+        <td>{{ u.tipo_vehiculo|capitalize }}</td>
+        <td><strong>{{ u.placa }}</strong></td>
+        <td>{{ u.celda or 'Sin celda' }}</td>
+        <td><span class="badge {{ 'bg' if u.estado=='activo' else 'bgr' }}">{{ u.estado }}</span></td>
+        <td class="acts">
+          <a href="{{ url_for('usuarios.editar', id=u.id) }}" class="ba be">Editar</a>
+          <form method="POST" action="{{ url_for('usuarios.inactivar', id=u.id) }}" style="display:inline"
+                onsubmit="return confirm('¿Inactivar a {{ u.nombre }}? Se liberará su celda.')">
+            <button type="submit" class="ba bd">Inactivar</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="tc">No se encontraron usuarios</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
