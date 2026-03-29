@@ -1,0 +1,30 @@
+<mxfile host="65bd71144e">
+    <diagram id="Iteracion_3" name="DS-03 y DS-04">
+        <mxGraphModel dx="1200" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169">
+            <root>
+                <mxCell id="0" />
+                <mxCell id="1" parent="0" />
+                <mxCell id="L1" value="Operador" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="40" y="40" width="100" height="800" as="geometry" /></mxCell>
+                <mxCell id="L2" value="UI Web" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="200" y="40" width="100" height="800" as="geometry" /></mxCell>
+                <mxCell id="L3" value="PagoController" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="360" y="40" width="100" height="800" as="geometry" /></mxCell>
+                <mxCell id="L4" value="Servicios (Pago/Recibo)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="520" y="40" width="120" height="800" as="geometry" /></mxCell>
+                <mxCell id="L5" value="Cron / BD" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="680" y="40" width="100" height="800" as="geometry" /></mxCell>
+
+                <mxCell id="B1" value="buscarUsuario(query)" style="verticalAlign=bottom;endArrow=block;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L2" target="L3"><mxGeometry relative="1" as="geometry"><mxPoint y="100" as="offset" /></mxGeometry></mxCell>
+                
+                <mxCell id="F2" value="alt [Inactivo/No encontrado]" style="shape=umlFrame;whiteSpace=wrap;width=160;height=30;boundedLbl=1;" vertex="1" parent="1"><mxGeometry x="30" y="130" width="720" height="100" as="geometry" /></mxCell>
+                <mxCell id="B2" value="Error 404/409" style="verticalAlign=bottom;endArrow=open;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L3" target="L2"><mxGeometry relative="1" as="geometry"><mxPoint y="160" as="offset" /></mxGeometry></mxCell>
+
+                <mxCell id="B3" value="registrarPago(id, periodo...)" style="verticalAlign=bottom;endArrow=block;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L2" target="L3"><mxGeometry relative="1" as="geometry"><mxPoint y="280" as="offset" /></mxGeometry></mxCell>
+                <mxCell id="B4" value="guardarPago()" style="verticalAlign=bottom;endArrow=block;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L3" target="L4"><mxGeometry relative="1" as="geometry"><mxPoint y="310" as="offset" /></mxGeometry></mxCell>
+                <mxCell id="B5" value="generarPDF(idPago)" style="verticalAlign=bottom;endArrow=block;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L4" target="L4"><mxGeometry relative="1" as="geometry"><mxPoint x="10" y="340" as="offset" /><mxPoint x="580" y="340" as="sourcePoint" /><mxPoint x="585" y="360" as="targetPoint" /><Array as="points"><mxPoint x="620" y="340" /><mxPoint x="620" y="360" /></Array></mxGeometry></mxCell>
+                
+                <mxCell id="N1" value="NOTIFICACIÓN AUTOMÁTICA" style="shape=note;whiteSpace=wrap;size=15;fillColor=#fff2cc;" vertex="1" parent="1"><mxGeometry x="300" y="450" width="200" height="40" as="geometry" /></mxCell>
+                <mxCell id="B6" value="verificarVencimientos() 8:00 AM" style="verticalAlign=bottom;endArrow=block;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L5" target="L4"><mxGeometry relative="1" as="geometry"><mxPoint y="520" as="offset" /></mxGeometry></mxCell>
+                
+                <mxCell id="F3" value="loop [Cada Usuario Vencido]" style="shape=umlFrame;whiteSpace=wrap;width=180;height=30;boundedLbl=1;" vertex="1" parent="1"><mxGeometry x="450" y="550" width="280" height="80" as="geometry" /></mxCell>
+                <mxCell id="B7" value="enviarAlerta(id, email)" style="verticalAlign=bottom;endArrow=block;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L4" target="L5"><mxGeometry relative="1" as="geometry"><mxPoint y="580" as="offset" /></mxGeometry></mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

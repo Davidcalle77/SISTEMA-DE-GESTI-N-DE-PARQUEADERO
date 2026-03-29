@@ -1,0 +1,25 @@
+<mxfile host="65bd71144e">
+    <diagram id="Iteracion_1_2" name="DS-01 y DS-02">
+        <mxGraphModel dx="1200" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169">
+            <root>
+                <mxCell id="0" />
+                <mxCell id="1" parent="0" />
+                <mxCell id="L1" value="Actor" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="40" y="40" width="100" height="600" as="geometry" /></mxCell>
+                <mxCell id="L2" value="UI Web" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="200" y="40" width="100" height="600" as="geometry" /></mxCell>
+                <mxCell id="L3" value="Controlador" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="360" y="40" width="100" height="600" as="geometry" /></mxCell>
+                <mxCell id="L4" value="Servicio" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="520" y="40" width="100" height="600" as="geometry" /></mxCell>
+                <mxCell id="L5" value="Base de Datos" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="680" y="40" width="100" height="600" as="geometry" /></mxCell>
+
+                <mxCell id="M1" value="ingresar placa/tipo" style="verticalAlign=bottom;endArrow=block;entryX=0;entryY=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L1" target="L2"><mxGeometry relative="1" as="geometry"><mxPoint y="100" as="offset" /></mxGeometry></mxCell>
+                <mxCell id="M2" value="registrarEntrada(placa, tipo)" style="verticalAlign=bottom;endArrow=block;dashed=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L2" target="L3"><mxGeometry relative="1" as="geometry"><mxPoint y="120" as="offset" /></mxGeometry></mxCell>
+                
+                <mxCell id="F1" value="alt [Placa Activa]" style="shape=umlFrame;whiteSpace=wrap;width=120;height=30;boundedLbl=1;" vertex="1" parent="1"><mxGeometry x="30" y="140" width="720" height="120" as="geometry" /></mxCell>
+                <mxCell id="M3" value="Error 400 'Ya registrado'" style="verticalAlign=bottom;endArrow=open;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L3" target="L2"><mxGeometry relative="1" as="geometry"><mxPoint y="160" as="offset" /></mxGeometry></mxCell>
+                
+                <mxCell id="S1" value="" style="line;strokeWidth=1;dashed=1;labelBackgroundColor=none;" vertex="1" parent="F1"><mxGeometry y="60" width="720" height="10" as="geometry" /></mxCell>
+                <mxCell id="M4" value="obtenerCeldaDisponible()" style="verticalAlign=bottom;endArrow=block;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L3" target="L4"><mxGeometry relative="1" as="geometry"><mxPoint y="210" as="offset" /></mxGeometry></mxCell>
+                <mxCell id="M5" value="Movimiento.save()" style="verticalAlign=bottom;endArrow=block;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="L4" target="L5"><mxGeometry relative="1" as="geometry"><mxPoint y="230" as="offset" /></mxGeometry></mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

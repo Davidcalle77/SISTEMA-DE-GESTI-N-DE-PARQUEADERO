@@ -1,0 +1,57 @@
+<mxfile host="65bd71144e">
+    <diagram id="Autos_Colombia_Pagos" name="Gestión de Pagos Parqueadero">
+        <mxGraphModel dx="1000" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0" />
+                <mxCell id="1" parent="0" />
+                <mxCell id="title" value="Casos de Uso – Gestión de Pagos Parqueadero Autos Colombia" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="210" y="10" width="400" height="30" as="geometry" />
+                </mxCell>
+                <mxCell id="boundary" value="Sistema Parqueadero Autos Colombia" style="shape=rect;html=1;verticalAlign=top;fontStyle=1;whiteSpace=wrap;fillColor=none;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="210" y="50" width="400" height="580" as="geometry" />
+                </mxCell>
+                <mxCell id="op" value="Operador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="120" width="30" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="admin" value="Administrador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="380" width="30" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="sys" value="Sistema" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="710" y="260" width="30" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="p01" value="CU-P01: Registrar Pago" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="80" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="p02" value="CU-P02: Consultar Estado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="150" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="p03" value="CU-P03: Generar Recibo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="430" y="210" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="p04" value="CU-P04: Emitir Reportes" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="280" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="p05" value="CU-P05: Aplicar Descuentos" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="350" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="p06" value="CU-P06: Gestionar Mora" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="420" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="p07" value="CU-P07: Notificación Automática" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="490" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="p08" value="CU-P08: Generar PDF" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="560" width="160" height="60" as="geometry" />
+                </mxCell>
+                <mxCell id="line1" edge="1" parent="1" source="op" target="p01"><mxGeometry relative="1" as="geometry" /></mxCell>
+                <mxCell id="line2" edge="1" parent="1" source="op" target="p02"><mxGeometry relative="1" as="geometry" /></mxCell>
+                <mxCell id="line3" edge="1" parent="1" source="admin" target="p05" style="strokeWidth=2;"><mxGeometry relative="1" as="geometry" /></mxCell>
+                <mxCell id="line4" edge="1" parent="1" source="admin" target="op" style="endArrow=block;endFill=0;endSize=12;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+                <mxCell id="line5" edge="1" parent="1" source="sys" target="p07"><mxGeometry relative="1" as="geometry" /></mxCell>
+                <mxCell id="line6" edge="1" parent="1" source="sys" target="p08"><mxGeometry relative="1" as="geometry" /></mxCell>
+                <mxCell id="inc" value="&lt;&lt;include&gt;&gt;" edge="1" parent="1" source="p01" target="p03" style="dashed=1;endArrow=open;endSize=12;html=1;"><mxGeometry relative="1" as="geometry" /></mxCell>
+                <mxCell id="ext" value="&lt;&lt;extend&gt;&gt;" edge="1" parent="1" source="p03" target="p01" style="dashed=1;endArrow=open;endSize=12;html=1;curved=1;"><mxGeometry x="-0.1" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry></mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
