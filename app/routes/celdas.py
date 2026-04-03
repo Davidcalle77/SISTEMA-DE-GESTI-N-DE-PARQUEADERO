@@ -9,7 +9,10 @@ celdas_bp = Blueprint("celdas", __name__, url_prefix="/celdas")
 @celdas_bp.route("/pago/<int:id>")
 def ver_pago(id):
     total = calcular_pago(id)
-    return f"Total a pagar: ${total}"
+    return jsonify({
+        "total": total,
+        "texto": f"Total a pagar: ${total}",
+    })
 
 
 @celdas_bp.route("/")

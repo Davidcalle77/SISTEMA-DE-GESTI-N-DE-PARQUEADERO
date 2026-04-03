@@ -41,6 +41,11 @@ cd SISTEMA-DE-GESTI-N-DE-PARQUEADERO
 ### Iteración 3: Gestión de Pagos (Actual)
 [cite_start]Esta fase final consolida el componente económico del negocio[cite: 17, 68]:
 * [cite_start]**Registro de Pagos:** Control de cobros mensuales y selección de métodos (Efectivo, Transferencia, PSE)[cite: 18].
+* [cite_start]**Cálculo Automático de Pagos:** Sistema inteligente que calcula automáticamente el valor a pagar según el tiempo de permanencia del vehículo en la celda, sin necesidad de ingreso manual.
+  - Obtiene la fecha de entrada desde `celdas.fecha_asignacion` o `entradas_salidas.fecha_hora`
+  - Calcula horas transcurridas desde entrada hasta el momento actual
+  - Aplica tarifa configurable (por defecto $2,000 por hora, mínimo 1 hora)
+  - Muestra resultado en tiempo real desde la interfaz del modal de celdas
 * [cite_start]**Control de Cartera:** Identificación de usuarios al día, próximos a vencer y morosos[cite: 18].
 * [cite_start]**Notificaciones:** Sistema automático de alertas de vencimiento mediante tareas programadas[cite: 29, 52].
 * [cite_start]**Reportes:** Dashboard administrativo con KPIs de recaudación mensual[cite: 28, 40].

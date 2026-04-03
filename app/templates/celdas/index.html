@@ -59,6 +59,7 @@ function abrirModal(id, codigo, estado, usuario, placa, cedula) {
     b += `<p><strong>Usuario:</strong> ${usuario}</p>`;
     b += `<p><strong>Cedula:</strong> ${cedula}</p>`;
     b += `<p><strong>Placa:</strong> ${placa}</p>`;
+    b += `<p id="pago-celda-${id}"><button class="btn bs-btn" onclick="calcularPago(${id})">Calcular pago</button></p>`;
   }
   document.getElementById('mbody').innerHTML = b;
 
@@ -86,6 +87,21 @@ function abrirModal(id, codigo, estado, usuario, placa, cedula) {
   }
   document.getElementById('mfoot').innerHTML = f;
   document.getElementById('modal').classList.remove('hidden');
+}
+
+function calcularPago(id) {
+  const contenedor = document.getElementById(`pago-celda-${id}`);
+  contenedor.innerHTML = 'Calculando...';
+
+  fetch(`/celdas/pago/${id}`)
+    .then(res => res.json())
+    .then(data => {
+      contenedor.innerHTML = `<strong>${data.texto}</strong>`;
+    })
+    .catch(err => {
+      console.error(err);
+      contenedor.innerHTML = '<span style="color:red">Error al calcular pago.</span>';
+    });
 }
 
 function cerrar() { document.getElementById('modal').classList.add('hidden'); }

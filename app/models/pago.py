@@ -5,19 +5,32 @@ from datetime import datetime
 
 
 def calcular_pago(celda_id, tarifa_hora=2000):
-    celda = query_fetchone(
+    # Primero intenta obtener la fecha de entrada de entradas_salidas
+    entrada = query_fetchone(
         """
-        SELECT fecha_asignacion
-        FROM celdas
-        WHERE id=?
+        SELECT TOP 1 fecha_hora
+        FROM entradas_salidas
+        WHERE celda_id = ? AND tipo_registro = 'entrada'
+        ORDER BY fecha_hora DESC
     """,
         (celda_id,),
     )
+    
+    # Si no hay entrada en entradas_salidas, obtén de celdas.fecha_asignacion
+    if not entrada:
+        entrada = query_fetchone(
+            """
+            SELECT fecha_asignacion AS fecha_hora
+            FROM celdas
+            WHERE id = ? AND estado = 'ocupada'
+        """,
+            (celda_id,),
+        )
 
-    if not celda or not celda["fecha_asignacion"]:
+    if not entrada or not entrada["fecha_hora"]:
         return 0
 
-    fecha_entrada = celda["fecha_asignacion"]
+    fecha_entrada = entrada["fecha_hora"]
     fecha_salida = datetime.now()
 
     tiempo = fecha_salida - fecha_entrada
