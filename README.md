@@ -66,3 +66,22 @@ cd SISTEMA-DE-GESTI-N-DE-PARQUEADERO
 * [cite_start]Sommerville (2016) - Software Engineering[cite: 89].
 * [cite_start]Schwaber & Sutherland (2020) - Guía de Scrum[cite: 88].
 
+## Estados del usuario
+"""
+USUARIO ACTIVO
+
+Es un cliente que tiene mensualidad vigente en el parqueadero
+Tiene una celda asignada (espacio físico reservado para su vehículo)
+Puede registrar pagos mensuales
+Aparece en el listado de usuarios activos
+Su celda figura como ocupada en el mapa de celdas
+
+
+USUARIO INACTIVO
+
+Es un cliente que dejó de usar el servicio del parqueadero
+Su registro no se elimina de la base de datos (se conserva por trazabilidad histórica)
+Su celda se libera automáticamente y queda disponible para otro usuario
+No puede recibir pagos mientras esté inactivo
+Solo el Administrador puede inactivar un usuario
+"""

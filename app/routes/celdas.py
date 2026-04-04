@@ -9,10 +9,12 @@ celdas_bp = Blueprint("celdas", __name__, url_prefix="/celdas")
 @celdas_bp.route("/pago/<int:id>")
 def ver_pago(id):
     total = calcular_pago(id)
-    return jsonify({
-        "total": total,
-        "texto": f"Total a pagar: ${total}",
-    })
+    return jsonify(
+        {
+            "total": total,
+            "texto": f"Total a pagar: ${total}",
+        }
+    )
 
 
 @celdas_bp.route("/")
@@ -56,6 +58,11 @@ def mantenimiento(id):
         flash("Debes ingresar el motivo del mantenimiento.", "danger")
         return redirect(url_for("celdas.index"))
 
+    """ CM → Módulo de modelos de celdas
+        .poner_mantenimiento() → Función que pone una celda en estado de mantenimiento
+        id → Identificador de la celda
+        motivo → Razón del mantenimiento (ej: "Reparación de cerradura")
+        fecha_fin → Fecha en que terminará el mantenimiento """
     CM.poner_mantenimiento(id, motivo, fecha_fin)
     flash(f'Celda {celda["codigo"]} puesta en mantenimiento.', "warning")
     return redirect(url_for("celdas.index"))
